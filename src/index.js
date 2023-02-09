@@ -1,17 +1,35 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import React from 'react';
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from 'firebase/app';
+import ReactDOM from 'react-dom/client';
+
+import App from './App';
+import { AuthContextProvider } from './context/AuthContext';
+
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyB3FzZe0JIrAHwC-7wan7toZUxH02PV56M",
+  authDomain: "project-app-87349.firebaseapp.com",
+  projectId: "project-app-87349",
+  storageBucket: "project-app-87349.appspot.com",
+  messagingSenderId: "240964036627",
+  appId: "1:240964036627:web:e02bbc403b1f94a567b7e6",
+};
+
+// Initialize Firebase
+initializeApp(firebaseConfig);
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <AuthContextProvider>
+      <App />
+    </AuthContextProvider>
   </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

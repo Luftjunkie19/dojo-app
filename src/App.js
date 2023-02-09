@@ -1,23 +1,57 @@
-import logo from './logo.svg';
 import './App.css';
 
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+} from 'react-router-dom';
+
+import Navbar from './component/Navbar';
+import OnlineUsers from './component/OnlineUsers';
+import Sidebar from './component/Sidebar';
+import { useAuthContext } from './hooks/useAuthContext';
+import Create from './pages/Create';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Project from './pages/Project';
+import SignUp from './pages/SignUp';
+
 function App() {
+  const { user, userIsReady } = useAuthContext();
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {userIsReady && (
+        <BrowserRouter>
+          {user && <Sidebar />}
+          <div className="container">
+            <Navbar />
+            <Routes>
+              <Route
+                path="/"
+                element={(user && <Home />) || (!user && <SignUp />)}
+              />
+              <Route
+                path="/sign-up"
+                element={(user && <Home />) || (!user && <SignUp />)}
+              />
+              <Route
+                path="/login"
+                element={(user && <Home />) || (!user && <Login />)}
+              />
+              <Route
+                path="/projects/:id"
+                element={(user && <Project />) || (!user && <Login />)}
+              />
+              <Route
+                path="/create"
+                element={(user && <Create />) || (!user && <Login />)}
+              />
+            </Routes>
+          </div>
+          {user && <OnlineUsers />}
+        </BrowserRouter>
+      )}
     </div>
   );
 }
